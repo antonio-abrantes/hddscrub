@@ -1,0 +1,16 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">HddScrub logo</title>
+  <desc id="desc">Minimal hard drive icon with checksum and verification accents.</desc>
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="#101820"/>
+  <rect x="96" y="128" width="320" height="256" rx="44" fill="#F8FAFC"/>
+  <rect x="128" y="160" width="256" height="160" rx="20" fill="#E5E7EB"/>
+  <circle cx="256" cy="240" r="58" fill="#101820"/>
+  <circle cx="256" cy="240" r="28" fill="#F8FAFC"/>
+  <circle cx="256" cy="240" r="9" fill="#101820"/>
+  <path d="M176 338H336" stroke="#101820" stroke-width="20" stroke-linecap="round"/>
+  <path d="M158 174L354 306" stroke="#06B6D4" stroke-width="18" stroke-linecap="round"/>
+  <path d="M158 306L354 174" stroke="#F59E0B" stroke-width="18" stroke-linecap="round"/>
+  <path d="M346 338L378 370L430 306" stroke="#22C55E" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M126 112H386" stroke="#06B6D4" stroke-width="16" stroke-linecap="round"/>
+  <path d="M126 400H386" stroke="#F59E0B" stroke-width="16" stroke-linecap="round"/>
+</svg>

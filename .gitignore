@@ -1,0 +1,30 @@
+# Runtime output and local history
+logs/*
+reports/*
+manifests/*
+
+# Keep required runtime directories in git
+!logs/.gitkeep
+!reports/.gitkeep
+!manifests/.gitkeep
+
+# Bundled portable third-party tools are intentionally versioned.
+# Keep runtime outputs out of git, but allow tools/smartctl.exe and tools/drivedb.h.
+
+# Local configuration may contain machine-specific paths or private scopes
+config.json
+*.local.json
+
+# PowerShell/editor temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# OS/editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
