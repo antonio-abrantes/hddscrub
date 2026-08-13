@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$Repository = 'antonio-abrantes/hd-backup',
+    [string]$Repository = 'antonio-abrantes/hddscrub',
     [string]$Branch = 'main',
     [string]$ArchiveUrl,
 

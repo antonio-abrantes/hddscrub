@@ -88,7 +88,7 @@ Nao precisa preparar ambiente Python, Node ou compilar nada. A CLI e um wrapper 
 Depois que o projeto estiver publicado no GitHub, da para instalar direto com:
 
 ```powershell
-irm https://raw.githubusercontent.com/antonio-abrantes/hd-backup/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/antonio-abrantes/hddscrub/main/install.ps1 | iex
 ```
 
 Abra um novo terminal e execute:
@@ -102,7 +102,7 @@ Se o repositorio for publicado com outro nome, ajuste a URL acima.
 Para instalar de outro repositorio/branch usando o mesmo bootstrap:
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/antonio-abrantes/hd-backup/main/install.ps1))) -Repository "antonio-abrantes/hd-backup" -Branch "main"
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/antonio-abrantes/hddscrub/main/install.ps1))) -Repository "antonio-abrantes/hddscrub" -Branch "main"
 ```
 
 ### Instalar a partir da pasta local

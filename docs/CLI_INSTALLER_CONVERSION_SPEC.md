@@ -90,7 +90,7 @@ A separacao ideal entre app em `%ProgramFiles%` e dados em `%ProgramData%` conti
 ## Estrutura Recomendada
 
 ```text
-hd-backup/
+hddscrub/
 ├── hdd-integrity-check.ps1
 ├── install-local.ps1
 ├── install.ps1
@@ -315,13 +315,13 @@ Responsabilidades:
 Exemplo publico:
 
 ```powershell
-irm https://raw.githubusercontent.com/antonio-abrantes/hd-backup/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/antonio-abrantes/hddscrub/main/install.ps1 | iex
 ```
 
 Exemplo parametrizado:
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/antonio-abrantes/hd-backup/main/install.ps1))) -Repository "antonio-abrantes/hd-backup" -Branch "main"
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/antonio-abrantes/hddscrub/main/install.ps1))) -Repository "antonio-abrantes/hddscrub" -Branch "main"
 ```
 
 ## Wrappers
