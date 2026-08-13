@@ -126,6 +126,33 @@ function Show-Paths {
     Write-Host ('logs         : {0}' -f (Join-Path $Script:AppRoot 'logs'))
 }
 
+function Open-AppFolder {
+    param(
+        [ValidateSet('app', 'logs', 'reports', 'manifests', 'tools')]
+        [string]$Name
+    )
+
+    $path = switch ($Name) {
+        'app' { $Script:AppRoot }
+        'logs' { Join-Path $Script:AppRoot 'logs' }
+        'reports' { Join-Path $Script:AppRoot 'reports' }
+        'manifests' { Join-Path $Script:AppRoot 'manifests' }
+        'tools' { $Script:ToolsRoot }
+    }
+
+    if (-not (Test-Path -LiteralPath $path)) {
+        New-Item -ItemType Directory -Path $path -Force | Out-Null
+    }
+
+    Write-Host ('Abrindo: {0}' -f $path)
+    try {
+        Start-Process -FilePath 'explorer.exe' -ArgumentList @($path) | Out-Null
+    } catch {
+        Write-Error ('Nao foi possivel abrir {0}: {1}' -f $path, $_.Exception.Message)
+        exit 1
+    }
+}
+
 function Show-Current {
     Write-CliHeader
     Write-Host ''
@@ -247,6 +274,28 @@ switch ($first) {
     'doctor' { Invoke-Doctor; exit 0 }
     'paths' { Show-Paths; exit 0 }
     'current' { Show-Current; exit 0 }
+    'logs' { Open-AppFolder -Name 'logs'; exit 0 }
+    'reports' { Open-AppFolder -Name 'reports'; exit 0 }
+    'manifests' { Open-AppFolder -Name 'manifests'; exit 0 }
+    'tools' { Open-AppFolder -Name 'tools'; exit 0 }
+    'app' { Open-AppFolder -Name 'app'; exit 0 }
+    'open' {
+        $target = if ($Arguments.Count -gt 1) { $Arguments[1].ToLowerInvariant() } else { 'app' }
+        switch ($target) {
+            'app' { Open-AppFolder -Name 'app'; exit 0 }
+            'logs' { Open-AppFolder -Name 'logs'; exit 0 }
+            'log' { Open-AppFolder -Name 'logs'; exit 0 }
+            'reports' { Open-AppFolder -Name 'reports'; exit 0 }
+            'report' { Open-AppFolder -Name 'reports'; exit 0 }
+            'manifests' { Open-AppFolder -Name 'manifests'; exit 0 }
+            'manifest' { Open-AppFolder -Name 'manifests'; exit 0 }
+            'tools' { Open-AppFolder -Name 'tools'; exit 0 }
+            default {
+                Write-Error ('Destino desconhecido para abrir: {0}. Use app, logs, reports, manifests ou tools.' -f $target)
+                exit 1
+            }
+        }
+    }
     'uninstall' {
         if (-not (Test-Path -LiteralPath $Script:UninstallScript)) {
             Write-Error ('uninstall.ps1 nao encontrado em {0}' -f $Script:UninstallScript)

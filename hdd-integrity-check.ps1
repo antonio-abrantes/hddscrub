@@ -2103,8 +2103,10 @@ Log:            $logRelativePath
     return [pscustomobject]@{
         JsonPath = $jsonPath
         TxtPath = $txtPath
+        ReportRoot = $ReportRoot
         JsonRelativePath = $jsonRelativePath
         TxtRelativePath = $txtRelativePath
+        ReportRootRelativePath = Get-ProjectRelativePath -Path $ReportRoot
     }
 }
 
@@ -2167,6 +2169,74 @@ function Show-ReportSummary {
     Write-Host ('Long Test  : {0}' -f $longSummary)
     Write-Host ('Filesystem : {0}' -f $filesystemSummary)
     Write-Host ('Checksum   : {0}' -f $checksumSummary)
+}
+
+function Open-PathSafely {
+    param(
+        [string]$Path,
+        [switch]$WithNotepad
+    )
+
+    try {
+        if ($WithNotepad) {
+            Start-Process -FilePath 'notepad.exe' -ArgumentList @($Path) | Out-Null
+        } else {
+            Start-Process -FilePath 'explorer.exe' -ArgumentList @($Path) | Out-Null
+        }
+        return $true
+    } catch {
+        Write-Status -Status 'WARNING' -Message ('Nao foi possivel abrir {0}: {1}' -f $Path, $_.Exception.Message)
+        return $false
+    }
+}
+
+function Offer-OpenGeneratedArtifacts {
+    param(
+        [object]$Paths,
+        [string]$LogPath
+    )
+
+    Write-Section -Title 'ARQUIVOS GERADOS'
+    Write-Host ('Relatorio TXT : {0}' -f $Paths.TxtPath)
+    Write-Host ('Relatorio JSON: {0}' -f $Paths.JsonPath)
+    Write-Host ('Pasta         : {0}' -f $Paths.ReportRoot)
+    Write-Host ('Log           : {0}' -f $LogPath)
+    Write-Host ''
+    Write-Host '[1] Abrir relatorio TXT no Notepad'
+    Write-Host '[2] Abrir pasta do relatorio no Explorer'
+    Write-Host '[3] Abrir pasta de logs no Explorer'
+    Write-Host '[4] Nao abrir nada'
+    Write-Host ''
+
+    while ($true) {
+        $selection = Read-Host 'Escolha [1-4, Enter para nao abrir]'
+        if ([string]::IsNullOrWhiteSpace($selection)) {
+            Write-Status -Status 'INFO' -Message 'Nenhum arquivo foi aberto.'
+            return
+        }
+
+        switch ($selection.Trim()) {
+            '1' {
+                Open-PathSafely -Path $Paths.TxtPath -WithNotepad | Out-Null
+                return
+            }
+            '2' {
+                Open-PathSafely -Path $Paths.ReportRoot | Out-Null
+                return
+            }
+            '3' {
+                Open-PathSafely -Path $Script:LogsRoot | Out-Null
+                return
+            }
+            '4' {
+                Write-Status -Status 'INFO' -Message 'Nenhum arquivo foi aberto.'
+                return
+            }
+            default {
+                Write-Host 'Selecao invalida. Informe um numero de 1 a 4.' -ForegroundColor Yellow
+            }
+        }
+    }
 }
 
 function Invoke-OfflinePreparation {
@@ -2414,9 +2484,7 @@ function Invoke-Main {
         $exitCode = $computedExitCode
     }
 
-    Write-Host ''
-    Write-Host ('Relatorio salvo em: {0}' -f $paths.TxtRelativePath)
-    Write-Host ('Log salvo em:       {0}' -f (Get-ProjectRelativePath -Path $Script:LogPath))
+    Offer-OpenGeneratedArtifacts -Paths $paths -LogPath $Script:LogPath
 
     $offlineOk = Invoke-OfflinePreparation -InitialContext $context
     if (-not $offlineOk) {

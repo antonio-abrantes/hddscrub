@@ -311,6 +311,7 @@ Responsabilidades:
 5. Validar que `install-local.ps1` e `hdd-integrity-check.ps1` existem no pacote.
 6. Chamar `install-local.ps1` com `-Scope`, `-InstallDir`, `-NoPath` e `-Force`.
 7. Apagar a pasta temporaria ao final, exceto quando `-KeepDownload` for usado.
+8. Nao usar `exit` no fluxo normal, para nao fechar o terminal quando executado via `irm ... | iex`.
 
 Exemplo publico:
 
@@ -380,6 +381,10 @@ Tabela esperada no README:
 | `hddscrub quick --drive X` | Executa reconhecimento SMART seguro |
 | `hddscrub current` | Mostra caminhos/configuracao ativa |
 | `hddscrub paths` | Mostra instalacao, dados, tools e logs |
+| `hddscrub logs` | Abre a pasta de logs no Explorer |
+| `hddscrub reports` | Abre a pasta de relatorios no Explorer |
+| `hddscrub manifests` | Abre a pasta de manifestos/historico no Explorer |
+| `hddscrub open reports` | Abre uma pasta especifica do app no Explorer |
 | `hddscrub doctor` | Valida ambiente e dependencias |
 | `hddscrub uninstall` | Remove a CLI instalada |
 | `hddscrub --help` | Mostra ajuda |
@@ -448,6 +453,32 @@ Melhoria futura no script principal:
 .\manifests
 .\reports
 .\logs
+```
+
+## Acesso Visual A Relatorios
+
+Ao final de cada execucao, mostrar caminhos absolutos para:
+
+- relatorio TXT;
+- relatorio JSON;
+- pasta do relatorio;
+- log da execucao.
+
+Depois disso, oferecer:
+
+- abrir o TXT no Notepad;
+- abrir a pasta do relatorio no Explorer;
+- abrir a pasta de logs no Explorer;
+- nao abrir nada.
+
+Comandos auxiliares da CLI:
+
+```powershell
+hddscrub logs
+hddscrub reports
+hddscrub manifests
+hddscrub open app
+hddscrub open tools
 ```
 
 ## Permissoes e Elevacao
@@ -701,6 +732,8 @@ config.json local
 - `hddscrub help` lista comandos, opcoes e exemplos.
 - `hddscrub help smart` mostra ajuda especifica de comando.
 - `hddscrub doctor` valida dependencias.
+- `hddscrub logs`, `hddscrub reports` e `hddscrub manifests` abrem as pastas correspondentes.
+- Fim da verificacao mostra caminhos absolutos do TXT/JSON/pasta/log e oferece abertura visual.
 - `hddscrub scrub --drive X` chama `ScrubOnly`.
 - `hddscrub data --drive X` chama `DataOnly`.
 - `hddscrub fs --drive X` chama `FilesystemOnly`.

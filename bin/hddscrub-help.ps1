@@ -38,6 +38,10 @@ function Write-GeneralHelp {
     Write-Host ''
     Write-Host '  doctor      Valida instalacao, dependencias e caminhos.'
     Write-Host '  paths       Mostra caminhos da instalacao e dados.'
+    Write-Host '  logs        Abre a pasta de logs no Explorer.'
+    Write-Host '  reports     Abre a pasta de relatorios no Explorer.'
+    Write-Host '  manifests   Abre a pasta de manifestos/historico no Explorer.'
+    Write-Host '  open        Abre app, logs, reports, manifests ou tools.'
     Write-Host '  current     Mostra versao, PowerShell, elevacao e smartctl.'
     Write-Host '  version     Mostra versao. Alias: --version, -v'
     Write-Host '  uninstall   Remove a CLI. Pergunta se mantem ou apaga historico.'
@@ -63,6 +67,8 @@ function Write-GeneralHelp {
     Write-Host '  hddscrub smart --drive E --skip-long-test'
     Write-Host '  hddscrub quick --drive X --allow-pd-smart'
     Write-Host '  hddscrub doctor'
+    Write-Host '  hddscrub logs'
+    Write-Host '  hddscrub open reports'
     Write-Host '  hddscrub uninstall'
     Write-Host ''
     Write-Host 'SAFETY'
@@ -74,6 +80,7 @@ function Write-GeneralHelp {
     Write-Host '  hddscrub help data'
     Write-Host '  hddscrub help scrub'
     Write-Host '  hddscrub help smart'
+    Write-Host '  hddscrub help open'
     Write-Host '  hddscrub help uninstall'
 }
 
@@ -143,6 +150,30 @@ function Write-CommandHelp {
             Write-Host 'hddscrub paths'
             Write-Host ''
             Write-Host 'Mostra app root, script principal, tools, manifests, reports e logs.'
+        }
+        'logs' {
+            Write-Host 'hddscrub logs'
+            Write-Host ''
+            Write-Host 'Abre a pasta de logs no Explorer.'
+            Write-Host 'Alias: hddscrub open logs'
+        }
+        'reports' {
+            Write-Host 'hddscrub reports'
+            Write-Host ''
+            Write-Host 'Abre a pasta de relatorios no Explorer.'
+            Write-Host 'Alias: hddscrub open reports'
+        }
+        'manifests' {
+            Write-Host 'hddscrub manifests'
+            Write-Host ''
+            Write-Host 'Abre a pasta de manifestos e historico no Explorer.'
+            Write-Host 'Alias: hddscrub open manifests'
+        }
+        'open' {
+            Write-Host 'hddscrub open [app|logs|reports|manifests|tools]'
+            Write-Host ''
+            Write-Host 'Abre uma pasta da instalacao no Explorer.'
+            Write-Host 'Sem alvo, abre a pasta principal do app.'
         }
         'current' {
             Write-Host 'hddscrub current'

@@ -97,6 +97,8 @@ Abra um novo terminal e execute:
 hddscrub
 ```
 
+O instalador retorna para o prompt ao concluir; ele nao deve fechar a janela do terminal.
+
 Se o repositorio for publicado com outro nome, ajuste a URL acima.
 
 Para instalar de outro repositorio/branch usando o mesmo bootstrap:
@@ -179,6 +181,8 @@ hddscrub help
 hddscrub help smart
 hddscrub --version
 hddscrub -v
+hddscrub logs
+hddscrub reports
 ```
 
 A versao exibida pela CLI vem do arquivo:
@@ -377,6 +381,10 @@ Com a CLI instalada, os atalhos equivalentes sao:
 | `hddscrub -v` | Atalho de versao |
 | `hddscrub doctor` | Diagnostico da instalacao |
 | `hddscrub paths` | Mostra caminhos usados |
+| `hddscrub logs` | Abre a pasta de logs |
+| `hddscrub reports` | Abre a pasta de relatorios |
+| `hddscrub manifests` | Abre a pasta de manifestos/historico |
+| `hddscrub open reports` | Abre uma pasta especifica do app |
 | `hddscrub uninstall` | Remove a CLI e pergunta se mantem ou apaga historico |
 
 O modo principal do projeto e **Scrub preventivo completo dos dados**. Ele confirma o HDD, pergunta se voce quer executar SMART antes, e entao segue para filesystem nao destrutivo e SHA-256/historico. Se voce responder `N` para SMART, ele pula essa camada e vai direto para a leitura completa dos arquivos.
@@ -589,6 +597,17 @@ reports/<SERIAL>/2026-08-13_093600.json
 ```
 
 O TXT e feito para leitura rapida. O JSON guarda dados estruturados para historico e comparacao futura.
+
+Ao final da verificacao, o script mostra os caminhos absolutos do TXT, JSON, pasta do relatorio e log. Ele tambem oferece abrir o TXT no Notepad, abrir a pasta do relatorio ou abrir a pasta de logs.
+
+Com a CLI instalada, voce tambem pode abrir as pastas principais diretamente:
+
+```powershell
+hddscrub logs
+hddscrub reports
+hddscrub manifests
+hddscrub open tools
+```
 
 ## O que a ferramenta ajuda a detectar
 

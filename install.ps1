@@ -52,6 +52,14 @@ function Invoke-LocalInstaller {
     }
 }
 
+function Complete-Install {
+    param([int]$Code)
+
+    if ($Code -ne 0) {
+        throw ('Instalador finalizou com codigo {0}.' -f $Code)
+    }
+}
+
 if ($env:OS -ne 'Windows_NT') {
     throw 'Este instalador e exclusivo para Windows.'
 }
@@ -64,7 +72,8 @@ if ($localInstaller -and $localMainScript -and
     (Test-Path -LiteralPath $localMainScript)) {
     Write-Step 'Instalacao local detectada.'
     Invoke-LocalInstaller -InstallerPath $localInstaller
-    exit $Script:InstallerExitCode
+    Complete-Install -Code $Script:InstallerExitCode
+    return
 }
 
 if (-not $ArchiveUrl) {
@@ -120,4 +129,5 @@ try {
     }
 }
 
-exit $Script:InstallerExitCode
+Complete-Install -Code $Script:InstallerExitCode
+return
